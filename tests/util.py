@@ -13,6 +13,7 @@ def simple_wrapper(test_func):
         logger.debug("Some MetaStuff: In the wrapper before: %s > > > > > > > > > > > > >" % args[0])
         test_func(self, *args, **kwargs)
         logger.debug("Some MetaStuff: In the wrapper after: %s < < < < < < < < < < < < < <" % args[0])
+
     return a_wrapper
 
 
@@ -24,7 +25,7 @@ def forgiving_wrapper(orig_func):
             orig_func(self, *args, **kwargs)
         except Exception as e:
             # If the exception is not re-raised, this could/should be a warning of some kind
-            logger.warn("+ + OH NO + + %s (notice that the test _passes_ unless re-raised)" % e.message)
+            logger.warn("+ + OH NO + + %s (notice that the test _passes_ unless re-raised)" % e)
         logger.debug("Other MetaStuff: In the other wrapper, after < < < < < < < < < < < < < <")
 
     return b_wrapper
@@ -84,7 +85,7 @@ class retry(object):
                     logger.info("{} succeeded.".format(func_signature))
                     # It worked, no need to retry :)
                     break
-                except Exception, e:
+                except Exception as e:
                     # TODO: Generally, swallowing all exceptions is bad; the handled exceptions should be specific
                     # TODO: Differentiate between "retriable" exceptions and completely bollocks situations
                     # TODO: A tuple of retriable exception types would need to be passed in
@@ -105,7 +106,9 @@ class retry(object):
                 raise RetryMaximumAttemptsException(message)
 
             logger.debug("In the retry wrapper, after < < < < < < < < < < < < < <")
+
         return wrapped_f
 
 
-class RetryMaximumAttemptsException(Exception): pass
+class RetryMaximumAttemptsException(Exception):
+    pass

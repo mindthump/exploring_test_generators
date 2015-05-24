@@ -1,12 +1,12 @@
-from util import simple_wrapper, retry, forgiving_wrapper
-from test_base import TestBase
+from tests.util import simple_wrapper, retry, forgiving_wrapper
+from tests.test_base import TestBase
 from nose.tools import assert_equals, assert_true, nottest
 from nose.plugins.attrib import attr
 from nose.plugins.skip import SkipTest
 import nose
 import inspect
 import logging
-from twiddle import Twiddle
+from tests.twiddle import Twiddle
 
 logger = logging.getLogger(__name__)
 
@@ -24,19 +24,15 @@ class TestTwiddling(TestBase):
     def setup_class(cls):
         logger.debug("Class setup_class: tie the knot ==========================")
 
-
     @classmethod
     def teardown_class(cls):
         logger.debug("Class teardown_class: untie the knot ==========================")
 
-
     def setup(self):
         logger.debug("Method setup: lift the lid --------------------------")
 
-
     def teardown(self):
         logger.debug("Method teardown: drop the lid --------------------------")
-
 
     @attr('twiddletest')
     @attr('weekly')
@@ -63,8 +59,7 @@ class TestTwiddling(TestBase):
 
         logger.info("<<Test Complete: %s" % inspect.stack()[0][3])
 
-
-    @retry(retries=3, wait=2, patience=2)
+    # @retry(retries=3, wait=2, patience=2)
     def verify_twiddle(self, version, platform):
         """
         NOTE: This is the _test_ which exercises the function itself
@@ -99,4 +94,3 @@ class TestBar(TestBase):
             assert_equals("real", "rael")
         except AssertionError as ae:
             logger.info('Ha! The test_reality assertion failure gets swallowed by an except clause.')
-

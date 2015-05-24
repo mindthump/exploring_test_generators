@@ -1,11 +1,10 @@
-from util import retry
 from random import randint
 import logging
 
 logger = logging.getLogger(__name__)
 
-class Twiddle(object):
 
+class Twiddle(object):
     def twiddle(self, version, platform):
         """
         This is the function itself, it fails 1/3 of the time
@@ -19,4 +18,5 @@ class Twiddle(object):
             raise TwiddleSpecialException("Twiddle failure!")
 
 
-class TwiddleSpecialException(Exception): pass
+class TwiddleSpecialException(Exception):
+    pass

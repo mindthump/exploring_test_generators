@@ -13,13 +13,15 @@ def interpret_json():
             if step_details:
                 if step_details['state'] == 'error':
                     print(
-                        "{0}: step_details['state'] ('{1}')".format(step, json.loads(reply)['out']['out']['details']['subrequests'][step]['details']['message']))
+                        "{0}: step_details['state'] ('{1}')".format(step, json.loads(reply)['out']['out']['details'][
+                            'subrequests'][step]['details']['message']))
                 else:
-                    print("{0}: {1}".format(step, json.loads(reply)['out']['out']['details']['subrequests'][step]['state']))
+                    print("{0}: {1}".format(step,
+                                            json.loads(reply)['out']['out']['details']['subrequests'][step]['state']))
             else:
                 print("{}: None".format(step))
         except KeyError as ke:
-            print "Missing key: {0}".format(ke)
+            print("Missing key: {0}".format(ke))
             break
 
 

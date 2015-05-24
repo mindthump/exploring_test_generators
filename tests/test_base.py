@@ -23,10 +23,8 @@ class TestBase(object):
     def teardown_class(cls):
         logger.debug("TestBase Class (default) teardown_class: untie the knot B====B====B====B====B====B")
 
-
     def __init__(self):
         pass
-
 
     def setup(self):
         """

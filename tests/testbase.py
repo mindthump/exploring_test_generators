@@ -17,10 +17,8 @@ class TestBase(object):
     def teardown_class(cls):
         logger.info("<< Base Class default teardown_class: untie the knot")
 
-
     def __init__(self):
         pass
-
 
     def setup(self):
         logger.info(">>> TestBase default method setup: turn on the lights")
