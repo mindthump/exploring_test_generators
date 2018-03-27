@@ -71,7 +71,8 @@ class TestTwiddling(TestBase):
         # or this could include other specialized functionality -- perhaps more logging or
         # something in a try/catch if the retries are exhausted vs. other exceptions?
         self.verify_twiddle.__func__.description = ""
-        Twiddle().twiddle(version, platform)
+        t = Twiddle(version, platform)
+        t.twiddle()
 
 
 class TestBar(TestBase):
