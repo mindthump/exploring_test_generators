@@ -68,8 +68,8 @@ class TestTwiddling(TestBase):
         :return:
         """
         # TODO: The generator might be able to call straight to the FUT without this intermediate
-        # or this could include other specialized functionality -- perhaps more logging or
-        # something in a try/catch if the retries are exhausted vs. other exceptions?
+        #   or this could include other specialized functionality -- perhaps more logging or
+        #   something in a try/catch if the retries are exhausted vs. other exceptions?
         self.verify_twiddle.__func__.description = ""
         t = Twiddle(version, platform)
         t.twiddle()
