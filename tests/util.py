@@ -25,7 +25,7 @@ def forgiving_wrapper(orig_func):
             orig_func(self, *args, **kwargs)
         except Exception as e:
             # If the exception is not re-raised, this could/should be a warning of some kind
-            logger.warn("+ + OH NO + + %s (notice that the test _passes_ unless re-raised)" % e)
+            logger.warning("+ + OH NO + + %s (notice that the test _passes_ unless re-raised)" % e)
         logger.debug("Other MetaStuff: In the other wrapper, after < < < < < < < < < < < < < <")
 
     return b_wrapper
@@ -35,6 +35,7 @@ class retry(object):
     """
     Parameters to the decorator: retries (required), wait time after failure (in seconds),
     patience (exponent to increase wait time - can be float)
+    The name is intentionally lower-case for the decorator (@retry).
     """
 
     def __init__(self, retries, wait=5, patience=2):
