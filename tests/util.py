@@ -10,9 +10,15 @@ logger = logging.getLogger(__name__)
 def simple_wrapper(test_func):
     @wraps(test_func)
     def a_wrapper(self, *args, **kwargs):
-        logger.debug("Some MetaStuff: In the wrapper before: %s > > > > > > > > > > > > >" % args[0])
+        logger.debug(
+            "Some MetaStuff: In the wrapper before: %s > > > > > > > > > > > > >"
+            % args[0]
+        )
         test_func(self, *args, **kwargs)
-        logger.debug("Some MetaStuff: In the wrapper after: %s < < < < < < < < < < < < < <" % args[0])
+        logger.debug(
+            "Some MetaStuff: In the wrapper after: %s < < < < < < < < < < < < < <"
+            % args[0]
+        )
 
     return a_wrapper
 
@@ -20,13 +26,19 @@ def simple_wrapper(test_func):
 def forgiving_wrapper(orig_func):
     @wraps(orig_func)
     def b_wrapper(self, *args, **kwargs):
-        logger.debug("Other MetaStuff: In the other wrapper, before > > > > > > > > > > > > >")
+        logger.debug(
+            "Other MetaStuff: In the other wrapper, before > > > > > > > > > > > > >"
+        )
         try:
             orig_func(self, *args, **kwargs)
         except Exception as e:
             # If the exception is not re-raised, this could/should be a warning of some kind
-            logger.warning("+ + OH NO + + %s (notice that the test _passes_ unless re-raised)" % e)
-        logger.debug("Other MetaStuff: In the other wrapper, after < < < < < < < < < < < < < <")
+            logger.warning(
+                "+ + OH NO + + %s (notice that the test _passes_ unless re-raised)" % e
+            )
+        logger.debug(
+            "Other MetaStuff: In the other wrapper, after < < < < < < < < < < < < < <"
+        )
 
     return b_wrapper
 
@@ -48,8 +60,11 @@ class retry(object):
         self.wait = wait
         self.forgiveness = patience
 
-        logger.debug("Retry arguments: Retries={}, Wait={}, Forgiveness={}".format(self.retries, self.wait,
-                                                                                   self.forgiveness))
+        logger.debug(
+            "Retry arguments: Retries={}, Wait={}, Forgiveness={}".format(
+                self.retries, self.wait, self.forgiveness
+            )
+        )
 
     def __call__(self, orig_func):
         """
@@ -71,16 +86,24 @@ class retry(object):
 
             # This help make the log more readable. The last part drops the 'self' ref from the args
             # then joins the tuple elements into a nice string without the trailing comma you get from "str(tuple)"
-            func_signature = "{}({})".format(orig_func.__name__, ', '.join(map(str, args[1:])))
+            func_signature = "{}({})".format(
+                orig_func.__name__, ", ".join(map(str, args[1:]))
+            )
             for attempt_count in range(1, self.retries + 1):
                 try:
                     # No need to warn on the first attempt
                     if wait_seconds > 0:
                         logger.warning(
-                            "Waiting {} seconds before next attempt...".format(wait_seconds))
+                            "Waiting {} seconds before next attempt...".format(
+                                wait_seconds
+                            )
+                        )
                         sleep(wait_seconds)
                     logger.info(
-                        "Starting attempt #{} of {}.".format(attempt_count, func_signature))
+                        "Starting attempt #{} of {}.".format(
+                            attempt_count, func_signature
+                        )
+                    )
                     # NOTE: Execute the actual function with generated parameter(s)
                     orig_func(*args)
                     logger.info("{} succeeded.".format(func_signature))
@@ -95,14 +118,20 @@ class retry(object):
                     # raise SkipTest("No worries, I just don't like two.")
 
                     logger.warning(
-                        "Attempt #{} of {} had an error: {}".format(attempt_count, func_signature, e))
-                    wait_seconds = int(self.wait * math.pow(self.forgiveness, (attempt_count - 1)))
+                        "Attempt #{} of {} had an error: {}".format(
+                            attempt_count, func_signature, e
+                        )
+                    )
+                    wait_seconds = int(
+                        self.wait * math.pow(self.forgiveness, (attempt_count - 1))
+                    )
                     # Try again; this uses up one of our "retries"
                     continue
             else:
                 # We have run out of retries without success, so raise an exception.
                 message = "Maximum allowed retries ({}) exhausted for {}.".format(
-                    self.retries, func_signature)
+                    self.retries, func_signature
+                )
                 logger.error(message)
                 raise RetryMaximumAttemptsException(message)
 

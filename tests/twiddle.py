@@ -25,7 +25,11 @@ class Twiddle(object):
         :return:
         """
         outcome = randint(0, 2)
-        logger.info("Twiddling, version = '{}' platform = '{}'".format(self.version, self.platform))
+        logger.info(
+            "Twiddling, version = '{}' platform = '{}'".format(
+                self.version, self.platform
+            )
+        )
         if outcome == 0:
             raise TwiddleSpecialException("Twiddle failure!")
 
@@ -34,4 +38,5 @@ class TwiddleSpecialException(Exception):
     """
     Custom exception for twiddle() failures.
     """
+
     pass

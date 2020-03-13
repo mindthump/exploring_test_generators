@@ -2,7 +2,7 @@ from __future__ import print_function
 
 import logging
 
-logger = logging.getLogger('tests')
+logger = logging.getLogger("tests")
 
 
 def setup_package():

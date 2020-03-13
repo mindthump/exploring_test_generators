@@ -34,10 +34,10 @@ class TestTwiddling(TestBase):
     def teardown(self):
         logger.debug("Method teardown: drop the lid --------------------------")
 
-    @attr('twiddletest')
-    @attr('weekly')
-    @attr(versions='all')
-    @attr(status='wip')
+    @attr("twiddletest")
+    @attr("weekly")
+    @attr(versions="all")
+    @attr(status="wip")
     def test_twiddling_all(self):
         """
         NOTE: This is the _test_generator_ of multiple tests
@@ -46,12 +46,21 @@ class TestTwiddling(TestBase):
         """
         logger.info(">>Test Start: %s" % inspect.stack()[0][3])
 
-        versions = ["Able", "Baker", "Charlie", "Dog", "Easy", "Fox", ]
+        versions = [
+            "Able",
+            "Baker",
+            "Charlie",
+            "Dog",
+            "Easy",
+            "Fox",
+        ]
         platforms = ["Macintosh", "Linux"]
 
         for version in versions:
             for platform in platforms:
-                test_desc = "Testing twiddling of version = '{}' platform = '{}'".format(version, platform)
+                test_desc = "Testing twiddling of version = '{}' platform = '{}'".format(
+                    version, platform
+                )
                 # Nose uses this value in the results output, otherwise it just uses the vanilla docstring over and over
                 self.verify_twiddle.__func__.description = test_desc
                 logger.info(test_desc)
@@ -76,22 +85,26 @@ class TestTwiddling(TestBase):
 
 
 class TestBar(TestBase):
-    @attr(status='good')
+    @attr(status="good")
     def test_base_fixtures(self):
-        logger.debug("++++ In the TestBar class, this is to see if the base class fixtures run")
+        logger.debug(
+            "++++ In the TestBar class, this is to see if the base class fixtures run"
+        )
 
-    @attr(status='good')
+    @attr(status="good")
     @forgiving_wrapper
     def test_forgiving_wrapper(self):
         logger.debug("++++ Do some cool crap here")
         assert False, "Did a bad thing, but we're in a forgiving wrapper"
 
-    @attr('daily')
-    @attr(versions='latest')
-    @attr(status='bad')
+    @attr("daily")
+    @attr(versions="latest")
+    @attr(status="bad")
     def test_reality(self):
         logger.info("++++ Reality Test: nothing unreal exists")
         try:
             assert_equals("real", "rael")
         except AssertionError as ae:
-            logger.info('Ha! The test_reality assertion failure gets swallowed by an except clause.')
+            logger.info(
+                "Ha! The test_reality assertion failure gets swallowed by an except clause."
+            )
