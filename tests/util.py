@@ -90,20 +90,20 @@ class retry(object):
                 orig_func.__name__, ", ".join(map(str, args[1:]))
             )
             for attempt_count in range(1, self.retries + 1):
-                try:
-                    # No need to warn on the first attempt
-                    if wait_seconds > 0:
-                        logger.warning(
-                            "Waiting {} seconds before next attempt...".format(
-                                wait_seconds
-                            )
-                        )
-                        sleep(wait_seconds)
-                    logger.info(
-                        "Starting attempt #{} of {}.".format(
-                            attempt_count, func_signature
+                # No need to warn on the first attempt
+                if wait_seconds > 0:
+                    logger.warning(
+                        "Waiting {} seconds before next attempt...".format(
+                            wait_seconds
                         )
                     )
+                    sleep(wait_seconds)
+                logger.info(
+                    "Starting attempt #{} of {}.".format(
+                        attempt_count, func_signature
+                    )
+                )
+                try:
                     # NOTE: Execute the actual function with generated parameter(s)
                     orig_func(*args)
                     logger.info("{} succeeded.".format(func_signature))

@@ -8,6 +8,8 @@ __pycache__/
 # local
 .DS_Store
 .idea/
+venv/
+.gitignore
 
 # C extensions
 *.so
